@@ -4,7 +4,7 @@ We are in a transition to OpenID Connect authentication with all of our services
 
 But there are productiv legacy and 3rd party services that can only be accessed by username/password credentials.
 
-So i decided to write this Keycloak "Authentication Provider" to get access to the plain users password but in a secure way. 
+So i decided to write this Keycloak "Authentication Provider" to get access to the *plain users password* (clear text password) but in a secure way. 
 
 ## build
 - run `mvn package` (Maven)
