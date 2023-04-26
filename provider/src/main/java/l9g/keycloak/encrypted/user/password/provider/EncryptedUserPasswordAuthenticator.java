@@ -51,7 +51,7 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
     if (publicKeyFile != null && fileExists)
     {
       LOGGER.
-        info("Loading public key file : " + publicKeyFile.getAbsolutePath());
+        info("*** L9G *** Loading public key file : " + publicKeyFile.getAbsolutePath());
       try (FileInputStream fis = new FileInputStream(publicKeyFile))
       {
         byte[] publicKeyBytes = new byte[fis.available()];
@@ -68,7 +68,7 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
     }
     else
     {
-      LOGGER.error("No public key file found! <" + PUBLIC_KEY_FILENAME + ">");
+      LOGGER.error("*** L9G *** No public key file found! <" + PUBLIC_KEY_FILENAME + ">");
     }
   }
 
@@ -107,9 +107,9 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
         userModel.setAttribute(USER_ATTRIBUTE_NAME, pwd);
         userModel.getAttributes().put(USER_ATTRIBUTE_NAME, pwd);
       }
-      catch (Exception ex)
+      catch (Throwable ex)
       {
-        LOGGER.error(ex);
+        LOGGER.error( "*** L9G *** Encryption failed", ex);
       }
     }
 
