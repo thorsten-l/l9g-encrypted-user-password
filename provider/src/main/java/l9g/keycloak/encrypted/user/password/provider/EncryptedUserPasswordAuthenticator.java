@@ -1,5 +1,6 @@
 package l9g.keycloak.encrypted.user.password.provider;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import java.io.File;
 import java.io.FileInputStream;
 import java.security.KeyFactory;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.crypto.Cipher;
-import javax.ws.rs.core.MultivaluedMap;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.Authenticator;
@@ -29,7 +29,7 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
   private final static String PUBLIC_KEY_FILENAME = "l9g-encrypted-user-password-server.publickey";
 
   private final static String USER_ATTRIBUTE_NAME = "ENCRYPTED_USER_PASSWORD";
-  
+
   private final static String[] CONFIG_DIRS =
   {
     ".", "providers", "/opt/keycloak/providers"
@@ -51,7 +51,8 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
     if (publicKeyFile != null && fileExists)
     {
       LOGGER.
-        info("*** L9G *** Loading public key file : " + publicKeyFile.getAbsolutePath());
+        info("*** L9G *** Loading public key file : " + publicKeyFile.
+          getAbsolutePath());
       try (FileInputStream fis = new FileInputStream(publicKeyFile))
       {
         byte[] publicKeyBytes = new byte[fis.available()];
@@ -68,7 +69,8 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
     }
     else
     {
-      LOGGER.error("*** L9G *** No public key file found! <" + PUBLIC_KEY_FILENAME + ">");
+      LOGGER.error("*** L9G *** No public key file found! <"
+        + PUBLIC_KEY_FILENAME + ">");
     }
   }
 
@@ -102,14 +104,14 @@ public class EncryptedUserPasswordAuthenticator implements Authenticator
 
         ArrayList<String> pwd = new ArrayList<>();
         pwd.add(encryptedPassword);
-        
+
         UserModel userModel = context.getUser();
         userModel.setAttribute(USER_ATTRIBUTE_NAME, pwd);
         userModel.getAttributes().put(USER_ATTRIBUTE_NAME, pwd);
       }
       catch (Throwable ex)
       {
-        LOGGER.error( "*** L9G *** Encryption failed", ex);
+        LOGGER.error("*** L9G *** Encryption failed", ex);
       }
     }
 
